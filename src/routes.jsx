@@ -6,6 +6,8 @@ import LocationsDetail from './containers/Locations/LocationsDetail/Loadable';
 import NotFoundPage from './containers/NotFoundPage/Loadable';
 import UsersOverview from './containers/Users/UsersOverview/Loadable';
 import UserDetails from './containers/Users/UserDetails/Loadable';
+import CarsOverview from './containers/Cars/CarsOverview/Loadable';
+import CarDetails from './containers/Cars/CarDetails/Loadable';
 
 export const publicRoutes = [
   {
@@ -35,6 +37,18 @@ export const publicRoutes = [
         path: '/:id/details',
         name: 'User details',
         component: UserDetails,
+      },
+    ],
+  },
+  {
+    path: '/cars',
+    name: 'Cars',
+    component: CarsOverview,
+    routes: [
+      {
+        path: '/:id/details',
+        name: 'Car details',
+        component: CarDetails,
       },
     ],
   },
