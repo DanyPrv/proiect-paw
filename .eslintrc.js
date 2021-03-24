@@ -19,7 +19,7 @@ module.exports = {
   ],
   rules: {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'linebreak-style': ['error', 'windows'],
+    'linebreak-style': ['error', 'unix'],
     'react/jsx-props-no-spreading': 'off',
     'no-nested-ternary': 'off',
     'react/prop-types': 'off',
