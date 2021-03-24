@@ -8,9 +8,9 @@ import {
   CBadge,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
-import usersData from './usersData';
+import carsData from './carsData';
 
-const fields = ['id', 'location', 'city', 'cars', 'status'];
+const fields = ['id', 'model', 'year', 'engine', 'fuel'];
 
 function CarsOverview({ children }) {
   const history = useHistory();
@@ -23,7 +23,7 @@ function CarsOverview({ children }) {
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={usersData}
+              items={carsData}
               fields={fields}
               striped
               itemsPerPage={5}
@@ -31,19 +31,11 @@ function CarsOverview({ children }) {
               clickableRows
               onRowClick={(row) => history.push(`/cars/${row.id}/details`)}
               scopedSlots={{
-                cars:
+                fuel:
                   (item) => (
                     <td>
-                      <CBadge color={item.cars > 10 ? 'primary' : item.cars > 5 ? 'warning' : 'danger'}>
-                        {item.cars}
-                      </CBadge>
-                    </td>
-                  ),
-                status:
-                  (item) => (
-                    <td>
-                      <CBadge color={item.status === 'Open' ? 'success' : 'danger'}>
-                        {item.status}
+                      <CBadge color="primary">
+                        {item.fuel}
                       </CBadge>
                     </td>
                   ),

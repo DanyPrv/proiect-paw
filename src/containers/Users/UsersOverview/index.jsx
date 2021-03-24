@@ -5,12 +5,11 @@ import {
   CCol,
   CCardHeader,
   CDataTable,
-  CBadge,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
 import usersData from './usersData';
 
-const fields = ['id', 'location', 'city', 'cars', 'status'];
+const fields = ['id', 'firstName', 'LastName', 'orders'];
 
 function UsersOverview({ children }) {
   const history = useHistory();
@@ -30,24 +29,6 @@ function UsersOverview({ children }) {
               pagination
               clickableRows
               onRowClick={(row) => history.push(`/users/${row.id}/details`)}
-              scopedSlots={{
-                cars:
-                  (item) => (
-                    <td>
-                      <CBadge color={item.cars > 10 ? 'primary' : item.cars > 5 ? 'warning' : 'danger'}>
-                        {item.cars}
-                      </CBadge>
-                    </td>
-                  ),
-                status:
-                  (item) => (
-                    <td>
-                      <CBadge color={item.status === 'Open' ? 'success' : 'danger'}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  ),
-              }}
             />
           </CCardBody>
         </CCard>
