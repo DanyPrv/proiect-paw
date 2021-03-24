@@ -4,6 +4,8 @@ import Dashboard from './containers/Dashboard/Loadable';
 import Locations from './containers/Locations/LocationsOverview/Loadable';
 import LocationsDetail from './containers/Locations/LocationsDetail/Loadable';
 import NotFoundPage from './containers/NotFoundPage/Loadable';
+import UsersOverview from './containers/Users/UsersOverview/Loadable';
+import UserDetails from './containers/Users/UserDetails/Loadable';
 
 export const publicRoutes = [
   {
@@ -21,6 +23,18 @@ export const publicRoutes = [
         path: '/:id/details',
         name: 'Location details',
         component: LocationsDetail,
+      },
+    ],
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: UsersOverview,
+    routes: [
+      {
+        path: '/:id/details',
+        name: 'User details',
+        component: UserDetails,
       },
     ],
   },

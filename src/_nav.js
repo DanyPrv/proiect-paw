@@ -17,6 +17,13 @@ const _nav = [
     // eslint-disable-next-line react/jsx-filename-extension
     icon: <CIcon name="cil-location-pin" customClasses="c-sidebar-nav-icon" />,
   },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Users',
+    to: '/users',
+    // eslint-disable-next-line react/jsx-filename-extension
+    icon: <CIcon name="cil-people" customClasses="c-sidebar-nav-icon" />,
+  },
 ];
 
 export default _nav;
