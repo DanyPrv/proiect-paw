@@ -3,9 +3,11 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
   CCardHeader,
   CDataTable,
   CBadge,
+  CButton,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
 import carsData from './carsData';
@@ -15,8 +17,13 @@ const fields = ['id', 'model', 'year', 'engine', 'fuel'];
 function CarsOverview({ children }) {
   const history = useHistory();
   return (
-    <>
+    <CRow>
       <CCol>
+        <CRow>
+          <CCol className="text-right mb-1">
+            <CButton color="primary">Add new car</CButton>
+          </CCol>
+        </CRow>
         <CCard>
           <CCardHeader>
             Users
@@ -45,7 +52,7 @@ function CarsOverview({ children }) {
         </CCard>
         {children}
       </CCol>
-    </>
+    </CRow>
   );
 }
 

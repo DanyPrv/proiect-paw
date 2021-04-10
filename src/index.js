@@ -9,8 +9,8 @@ import * as serviceWorker from './serviceWorker';
 
 import { icons } from './assets/icons';
 
-import store from './store';
 import App from './containers/App/Loadable';
+import { store } from './store/store';
 
 React.icons = icons;
 ReactDOM.render(

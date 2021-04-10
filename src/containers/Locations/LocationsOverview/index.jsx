@@ -3,6 +3,8 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
+  CButton,
   CCardHeader,
   CDataTable,
   CBadge,
@@ -18,8 +20,13 @@ function Locations({ children }) {
   //
   // }, [window.location.href]);
   return (
-    <>
+    <CRow>
       <CCol>
+        <CRow>
+          <CCol className="text-right mb-1">
+            <CButton color="primary">Add new location</CButton>
+          </CCol>
+        </CRow>
         <CCard>
           <CCardHeader>
             Locations
@@ -57,7 +64,7 @@ function Locations({ children }) {
         </CCard>
         {children}
       </CCol>
-    </>
+    </CRow>
   );
 }
 

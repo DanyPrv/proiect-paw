@@ -12,7 +12,7 @@ const Dashboard = () => (
       <CCardBody>
         <CRow>
           <CCol>
-            HELLOoooooooooooooooooooosadasdsadsada
+            Dashboard content
           </CCol>
         </CRow>
       </CCardBody>

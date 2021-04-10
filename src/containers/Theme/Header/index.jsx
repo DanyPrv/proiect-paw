@@ -9,7 +9,6 @@ import {
   CSubheader,
   CBreadcrumbRouter,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
 
 // routes config
 import { publicRoutes } from '../../../routes';
@@ -41,9 +40,7 @@ const Header = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon name="logo" height="48" alt="Logo" />
-      </CHeaderBrand>
+      <CHeaderBrand className="mx-auto d-lg-none" to="/" />
 
       <CHeaderNav className="px-3 ml-auto">
         <HeaderDropdown />
