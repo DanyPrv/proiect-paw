@@ -7,9 +7,16 @@ import {
   CDropdownToggle,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { useDispatch } from 'react-redux';
+import { appActions } from '../../../App/slice';
 
 const HeaderDropdown = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const onLogout = () => {
+    dispatch(appActions.logout());
+    history.push('/login');
+  };
   return (
     <CDropdown
       inNav
@@ -35,7 +42,7 @@ const HeaderDropdown = () => {
           <CIcon name="cil-user" className="mfe-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem onClick={() => history.push('/login')}>
+        <CDropdownItem onClick={() => onLogout()}>
           <CIcon name="cil-account-logout" className="mfe-2" />
           Log-out
         </CDropdownItem>
