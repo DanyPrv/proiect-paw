@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   CCard,
   CCardBody,
@@ -7,12 +7,24 @@ import {
   CDataTable,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
-import usersData from './usersData';
+import { useDispatch, useSelector } from 'react-redux';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+import { userOverviewActions, reducer, sliceKey } from './slice';
+import { selectUserOverviewData } from './selectors';
 
-const fields = ['id', 'firstName', 'LastName', 'orders'];
+import saga from './saga';
+
+const fields = ['id', 'firstName', 'lastName', 'email'];
 
 function UsersOverview({ children }) {
+  useInjectReducer({ key: sliceKey, reducer });
+  useInjectSaga({ key: sliceKey, saga });
   const history = useHistory();
+  const dispatch = useDispatch();
+  const users = useSelector(selectUserOverviewData);
+  useEffect(() => {
+    dispatch(userOverviewActions.getUsers());
+  }, []);
   return (
     <>
       <CCol>
@@ -22,7 +34,7 @@ function UsersOverview({ children }) {
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={usersData}
+              items={users ?? []}
               fields={fields}
               striped
               itemsPerPage={5}

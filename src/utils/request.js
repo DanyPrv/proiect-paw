@@ -1,7 +1,6 @@
 import { merge } from 'lodash';
-import { useDispatch } from 'react-redux';
 import { appActions } from '../containers/App/slice';
-import { store } from '../store/store';
+import { dispatch, store } from '../store/store';
 
 // eslint-disable-next-line import/no-cycle
 
@@ -32,7 +31,6 @@ function checkStatus(response) {
   }
 
   if (response.status === 401) {
-    const dispatch = useDispatch();
     dispatch(appActions.logout());
     window.location.href = '/login';
   }
@@ -58,7 +56,7 @@ export default function request(url, options, withBearer = true) {
     'Access-Control-Allow-Origin': '*',
   };
   if (withBearer) {
-    headers = { ...headers, Authorization: store.getState().app.user.token };
+    headers = { ...headers, Authorization: `Bearer ${store.getState().app.user.token}` };
   }
   const baseOptions = {
     headers,
