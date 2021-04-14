@@ -7,12 +7,15 @@ import {
   CDropdownToggle,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { appActions } from '../../../App/slice';
+import { selectUser } from '../../../App/selectors';
 
 const HeaderDropdown = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const onLogout = () => {
     dispatch(appActions.logout());
     history.push('/login');
@@ -26,7 +29,7 @@ const HeaderDropdown = () => {
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div>
           <CIcon name="cil-user" />
-          User name
+          {`${user.firstName} ${user.lastName}`}
         </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">

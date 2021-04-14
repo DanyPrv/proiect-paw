@@ -97,7 +97,9 @@ const Login = () => {
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Bla bla bla bla
+                      Don&apos;t have an account?
+                      <br />
+                      Create one right now!
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>

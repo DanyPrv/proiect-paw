@@ -9,10 +9,9 @@ function* login(action) {
     body: JSON.stringify(action.payload),
   };
   try {
-    const data = yield call(request, '/users/login', options);
+    const data = yield call(request, '/users/login', options, false);
     yield put(appActions.setUser(data));
   } catch (error) {
-    console.log('ERRORRR');
     yield put(loginActions.setLoginError(true));
   }
 }

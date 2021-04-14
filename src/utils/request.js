@@ -1,4 +1,8 @@
 import { merge } from 'lodash';
+import { useDispatch } from 'react-redux';
+import { appActions } from '../containers/App/slice';
+import { store } from '../store/store';
+
 // eslint-disable-next-line import/no-cycle
 
 /**
@@ -28,6 +32,8 @@ function checkStatus(response) {
   }
 
   if (response.status === 401) {
+    const dispatch = useDispatch();
+    dispatch(appActions.logout());
     window.location.href = '/login';
   }
 
@@ -41,19 +47,23 @@ function checkStatus(response) {
  *
  * @param  {string} url       The URL we want to request
  * @param  {object} [options] The options we want to pass to "fetch"
+ * @param  {boolean} [withBearer] Add bearer token to request
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
+export default function request(url, options, withBearer = true) {
   const finalUrl = process.env.REACT_APP_API_BASE_URL + url;
-
+  let headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  };
+  if (withBearer) {
+    headers = { ...headers, Authorization: store.getState().app.user.token };
+  }
   const baseOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   };
   const finalOptions = merge(baseOptions, options);
-
   return fetch(finalUrl, finalOptions)
     .then(checkStatus)
     .then(parseJSON);
