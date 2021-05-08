@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   CCard,
   CCardBody,
@@ -10,30 +10,42 @@ import {
   CBadge,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
-import locationsData from './locationsData';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { locationsOverviewActions, reducer, sliceKey } from './slice';
+import saga from './saga';
+import { selectLocationsOverviewData } from './selectors';
+import { isUserAdmin } from '../../../utils/user';
 
-const fields = ['id', 'location', 'city', 'cars', 'status'];
+const fields = ['id', 'address', 'city', 'status'];
 
 function Locations({ children }) {
+  useInjectReducer({ key: sliceKey, reducer });
+  useInjectSaga({ key: sliceKey, saga });
   const history = useHistory();
-  // useEffect(() => {
-  //
-  // }, [window.location.href]);
+  const dispatch = useDispatch();
+  const locations = useSelector(selectLocationsOverviewData);
+  useEffect(() => {
+    dispatch(locationsOverviewActions.getLocations());
+  }, []);
   return (
     <CRow>
       <CCol>
+        {isUserAdmin()
+        && (
         <CRow>
           <CCol className="text-right mb-1">
-            <CButton color="primary">Add new location</CButton>
+            <CButton color="primary" onClick={() => history.push('/locations/create')}>Add new location</CButton>
           </CCol>
         </CRow>
+        )}
         <CCard>
           <CCardHeader>
             Locations
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={locationsData}
+              items={locations}
               fields={fields}
               striped
               itemsPerPage={5}
@@ -41,14 +53,6 @@ function Locations({ children }) {
               clickableRows
               onRowClick={(row) => history.push(`/locations/${row.id}/details`)}
               scopedSlots={{
-                cars:
-                  (item) => (
-                    <td>
-                      <CBadge color={item.cars > 10 ? 'primary' : item.cars > 5 ? 'warning' : 'danger'}>
-                        {item.cars}
-                      </CBadge>
-                    </td>
-                  ),
                 status:
                   (item) => (
                     <td>

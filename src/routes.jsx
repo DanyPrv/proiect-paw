@@ -8,7 +8,9 @@ import UsersOverview from './containers/Users/UsersOverview/Loadable';
 import UserDetails from './containers/Users/UserDetails/Loadable';
 import CarsOverview from './containers/Cars/CarsOverview/Loadable';
 import CarDetails from './containers/Cars/CarDetails/Loadable';
+import CreateLocation from './containers/Locations/CreateLocation/Loadable';
 import { isUserAdmin } from './utils/user';
+import CreateCar from './containers/Cars/CreateCar/Loadable';
 
 export const publicRoutes = [
   {
@@ -26,6 +28,12 @@ export const publicRoutes = [
         path: '/:id/details',
         name: 'Location details',
         component: LocationsDetail,
+      },
+      {
+        path: '/create',
+        name: 'Create location',
+        component: CreateLocation,
+        isGrantedFunction: () => isUserAdmin(),
       },
     ],
   },
@@ -51,6 +59,12 @@ export const publicRoutes = [
         path: '/:id/details',
         name: 'Car details',
         component: CarDetails,
+      },
+      {
+        path: '/create',
+        name: 'Create car',
+        component: CreateCar,
+        isGrantedFunction: () => isUserAdmin(),
       },
     ],
   },

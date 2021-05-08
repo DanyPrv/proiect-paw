@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   CCard,
   CCardBody,
@@ -10,27 +10,42 @@ import {
   CButton,
 } from '@coreui/react';
 import { useHistory } from 'react-router-dom';
-import carsData from './carsData';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { carsOverviewActions, reducer, sliceKey } from './slice';
+import saga from './saga';
+import { selectCarsOverviewData } from './selectors';
+import { isUserAdmin } from '../../../utils/user';
 
 const fields = ['id', 'model', 'year', 'engine', 'fuel'];
 
 function CarsOverview({ children }) {
+  useInjectReducer({ key: sliceKey, reducer });
+  useInjectSaga({ key: sliceKey, saga });
   const history = useHistory();
+  const dispatch = useDispatch();
+  const cars = useSelector(selectCarsOverviewData);
+  useEffect(() => {
+    dispatch(carsOverviewActions.getCars());
+  }, []);
   return (
     <CRow>
       <CCol>
-        <CRow>
-          <CCol className="text-right mb-1">
-            <CButton color="primary">Add new car</CButton>
-          </CCol>
-        </CRow>
+        {isUserAdmin()
+        && (
+          <CRow>
+            <CCol className="text-right mb-1">
+              <CButton color="primary" onClick={() => history.push('/cars/create')}>Add new car</CButton>
+            </CCol>
+          </CRow>
+        )}
         <CCard>
           <CCardHeader>
             Users
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={carsData}
+              items={cars}
               fields={fields}
               striped
               itemsPerPage={5}
