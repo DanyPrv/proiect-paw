@@ -20,4 +20,4 @@ const Content = () => (
   </main>
 );
 
-export default React.memo(Content);
+export default Content;

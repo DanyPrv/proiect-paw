@@ -7,7 +7,7 @@ function* getData() {
     method: 'GET',
   };
   try {
-    const data = yield call(request, '/users', options);
+    const data = yield call(request, '/user', options);
     yield put(userOverviewActions.setUsers(data));
   } catch (error) {
     yield put(userOverviewActions.setErrors(error.message));

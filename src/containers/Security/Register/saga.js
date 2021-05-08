@@ -9,8 +9,12 @@ function* register(action) {
   };
   try {
     if (options) {
-      yield call(request, '/users/register', options, false);
-      yield put(registerActions.setRegisterSuccess(true));
+      const data = yield call(request, '/api/authenticate/register', options, false);
+      if (data.status === 'Error') {
+        yield put(registerActions.setRegisterError(data.message));
+      } else {
+        yield put(registerActions.setRegisterSuccess(true));
+      }
     }
   } catch (error) {
     yield put(registerActions.setRegisterError(error.message));

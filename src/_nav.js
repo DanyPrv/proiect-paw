@@ -1,6 +1,7 @@
 import React from 'react';
 import CIcon from '@coreui/icons-react';
-
+import { cloneDeep } from 'lodash';
+import { isUserAdmin } from './utils/user';
 // eslint-disable-next-line no-underscore-dangle
 const _nav = [
   {
@@ -23,6 +24,7 @@ const _nav = [
     to: '/users',
     // eslint-disable-next-line react/jsx-filename-extension
     icon: <CIcon name="cil-people" customClasses="c-sidebar-nav-icon" />,
+    isGrantedFunction: () => isUserAdmin(),
   },
   {
     _tag: 'CSidebarNavItem',
@@ -33,4 +35,31 @@ const _nav = [
   },
 ];
 
+const isAllowed = (menuItem) => !('isGrantedFunction' in menuItem) || menuItem.isGrantedFunction();
+
+export function allowedMenuItems(items) {
+  let allowedItems;
+  // eslint-disable-next-line array-callback-return,consistent-return
+  allowedItems = items.filter((menuItem) => {
+    if (isAllowed(menuItem)) {
+      if (menuItem.children) {
+        const allowedChildren = [{}];
+        menuItem.children.forEach((child) => {
+          if (isAllowed(child)) {
+            allowedChildren.push(child);
+          }
+        });
+
+        menuItem.children = allowedChildren;
+      }
+
+      return menuItem;
+    }
+  });
+  allowedItems = cloneDeep(allowedItems);
+  allowedItems.forEach((item) => {
+    delete item.isGrantedFunction;
+  });
+  return allowedItems;
+}
 export default _nav;

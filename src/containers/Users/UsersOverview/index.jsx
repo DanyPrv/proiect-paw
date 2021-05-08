@@ -14,7 +14,7 @@ import { selectUserOverviewData } from './selectors';
 
 import saga from './saga';
 
-const fields = ['id', 'firstName', 'lastName', 'email'];
+const fields = ['id', 'firstName', 'lastName', 'username', 'email'];
 
 function UsersOverview({ children }) {
   useInjectReducer({ key: sliceKey, reducer });

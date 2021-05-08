@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { localStorageGet, localStorageRemove, localStorageSet } from '../../utils/localStorage';
 
 export const initialState = {
-  user: JSON.parse(localStorageGet('user') ?? '{}'),
+  user: localStorageGet('user') ? JSON.parse(localStorageGet('user')) : null,
 };
 
 const appSlice = createSlice({

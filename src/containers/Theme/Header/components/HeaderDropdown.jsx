@@ -32,7 +32,7 @@ const HeaderDropdown = () => {
           {`${user.firstName} ${user.lastName}`}
         </div>
       </CDropdownToggle>
-      <CDropdownMenu className="pt-0" placement="bottom-end">
+      <CDropdownMenu>
         <CDropdownItem
           header
           tag="div"
@@ -42,11 +42,11 @@ const HeaderDropdown = () => {
           <strong>Account</strong>
         </CDropdownItem>
         <CDropdownItem>
-          <CIcon name="cil-user" className="mfe-2" />
+          <CIcon name="cil-user" />
           Profile
         </CDropdownItem>
         <CDropdownItem onClick={() => onLogout()}>
-          <CIcon name="cil-account-logout" className="mfe-2" />
+          <CIcon name="cil-account-logout" />
           Log-out
         </CDropdownItem>
       </CDropdownMenu>

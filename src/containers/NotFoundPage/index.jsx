@@ -12,9 +12,9 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 
-const NotFoundPage = ({ location, match }) => (
+const NotFoundPage = ({ location, match, alwaysDisplay }) => (
   <>
-    {location.pathname !== match.url ? (
+    {location.pathname !== match.url || alwaysDisplay ? (
       <div className="c-app c-default-layout flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">

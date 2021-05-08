@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   CCreateElement,
@@ -14,13 +14,20 @@ import {
 } from '@coreui/react';
 
 // sidebar nav config
-import navigation from '../../../_nav';
+import navigation, { allowedMenuItems } from '../../../_nav';
 import logoNegative from '../../../assets/icons/logo-negatie.png';
+import { selectUser } from '../../App/selectors';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.sidebarShow);
+  const user = useSelector(selectUser);
+  const [grantedMenuItems, setGrantedMenuItems] = useState([]);
 
+  useEffect(() => {
+    setGrantedMenuItems(allowedMenuItems(navigation));
+    // eslint-disable-next-line
+  }, [user]);
   return (
     <CSidebar
       show={show}
@@ -42,7 +49,7 @@ const Sidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement
-          items={navigation}
+          items={grantedMenuItems}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,
@@ -56,4 +63,4 @@ const Sidebar = () => {
   );
 };
 
-export default React.memo(Sidebar);
+export default Sidebar;

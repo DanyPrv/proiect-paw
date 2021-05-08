@@ -20,13 +20,14 @@ import { useHistory } from 'react-router-dom';
 import { registerActions, reducer, sliceKey } from './slice';
 
 import saga from './saga';
-import { selectRegisterSuccess } from './selectors';
+import { selectRegisterError, selectRegisterSuccess } from './selectors';
 
 const Register = () => {
   useInjectReducer({ key: sliceKey, reducer });
   useInjectSaga({ key: sliceKey, saga });
   const dispatch = useDispatch();
   const success = useSelector(selectRegisterSuccess);
+  const apiErrors = useSelector(selectRegisterError);
   const history = useHistory();
   const {
     register, handleSubmit, errors, getValues,
@@ -138,6 +139,7 @@ const Register = () => {
                       innerRef={register({ required: true, validate: (value) => value === getValues('password') })}
                     />
                   </CInputGroup>
+                  {apiErrors && <div className="text-danger">{apiErrors}</div>}
                   <CRow>
                     <CCol>
                       <CButton color="success" type="submit" block>Create Account</CButton>

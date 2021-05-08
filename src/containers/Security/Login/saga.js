@@ -9,7 +9,7 @@ function* login(action) {
     body: JSON.stringify(action.payload),
   };
   try {
-    const data = yield call(request, '/users/login', options, false);
+    const data = yield call(request, '/api/authenticate/login', options, false);
     yield put(appActions.setUser(data));
   } catch (error) {
     yield put(loginActions.setLoginError(true));

@@ -8,6 +8,7 @@ import UsersOverview from './containers/Users/UsersOverview/Loadable';
 import UserDetails from './containers/Users/UserDetails/Loadable';
 import CarsOverview from './containers/Cars/CarsOverview/Loadable';
 import CarDetails from './containers/Cars/CarDetails/Loadable';
+import { isUserAdmin } from './utils/user';
 
 export const publicRoutes = [
   {
@@ -32,6 +33,7 @@ export const publicRoutes = [
     path: '/users',
     name: 'Users',
     component: UsersOverview,
+    isGrantedFunction: () => isUserAdmin(),
     routes: [
       {
         path: '/:id/details',
@@ -55,30 +57,34 @@ export const publicRoutes = [
 
 ];
 
+const isAllowed = (route) => !('isGrantedFunction' in route) || route.isGrantedFunction();
+
 export function NestedRoutes({ routes, url = '' }) {
   const renderRoutes = (arrayRoutes, parentUrl) => {
     if (!arrayRoutes) {
       return null;
     }
     parentUrl = parentUrl === '/' ? '' : parentUrl; // ignore "/" root url so we can use "/<path" further down the nested routes
+    // eslint-disable-next-line array-callback-return,consistent-return
     return arrayRoutes.map((route) => {
       const {
         component: Component, path, exact = false, strict = false, routes: subRoutes,
       } = route;
-
-      return (
-        <Route
-          path={`${parentUrl}${path}`}
-          key={`${parentUrl}${path}`}
-          exact={exact}
-          strict={strict}
-          render={(props) => (
-            <Component {...props} childRoutes={subRoutes}>
-              {subRoutes && <NestedRoutes routes={subRoutes} url={`${parentUrl}${path}`} />}
-            </Component>
-          )}
-        />
-      );
+      if (isAllowed(route)) {
+        return (
+          <Route
+            path={`${parentUrl}${path}`}
+            key={`${parentUrl}${path}`}
+            exact={exact}
+            strict={strict}
+            render={(props) => (
+              <Component {...props} childRoutes={subRoutes}>
+                {subRoutes && <NestedRoutes routes={subRoutes} url={`${parentUrl}${path}`} />}
+              </Component>
+            )}
+          />
+        );
+      }
     });
   };
 
